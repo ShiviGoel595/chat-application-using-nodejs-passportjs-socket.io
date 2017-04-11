@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+    </head>
+    <body>
+        <div ng-app="mychat" ng-controller="myctrl" ng-init="getallusers()">
+            <h1> CHAT WITH USERS </h1>
+           
+            <hr>
+             <table border="1" ng-show="yes">
+            <tr><td>name</td><td>status</td><td>CHAT WITH HIM</td></tr>
+            <tr ng-repeat="x in succesful"><td>{{x.name}}</td><td>{{x.online}}</td><td><a href="/chat"> chat with him </a></td></tr>
+            </table>
+            {{notfound}}
+
+        </div>
+        <script>
+
+var app = angular.module('mychat', []);
+app.controller('myctrl', function($scope,$http) {
+    $scope.notfound="";
+    $scope.getallusers=function(){
+        $http.post('/getallusers')
+             .then(function(response){
+            $scope.succesful=response.data;
+            console.log($scope.succesful);
+            if($scope.succesful){
+                $scope.yes="true";
+            }
+            else
+            {
+                $scope.yes="false";
+                $scope.notfound="NO USER ONLINE";
+            }
+
+        
+        });
+    }
+
+});
+
+
+
+</script>
+    </body>

@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+    </head>
+    <body>
+        <div ng-app="mychat" ng-controller="myctrl">
+            <h1> LOGIN HERE </h1>
+             <form name="myuser" ng-submit="login(person)">
+                <input type="text" name="myname" placeholder="name" ng-model="person.username" required/>
+                <input type="text" name="mypassword" placeholder="password" ng-model="person.password"/>
+                <input type="submit" value="Enter">
+            </form>
+            <hr>
+            <a href='/registration'>REGISTER HERE IF NOT REGISTERED</a>
+
+
+{{succesful}}
+        </div>
+        <script>
+
+var app = angular.module('mychat', []);
+app.controller('myctrl', function($scope,$http) {
+    $scope.login=function(data){
+        console.log('ascfsaf');
+        console.log(data);
+        $http.post('/login',data)
+             .then(function(response){
+            $scope.succesful=response.data;
+            window.location.assign('dash');
+
+        
+        });
+    }
+
+});
+
+
+
+</script>
+    </body>
